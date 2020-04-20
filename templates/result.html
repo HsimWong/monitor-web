@@ -1,29 +1,139 @@
 <!DOCTYPE html>
 <html>
-<head> 
-<meta charset="utf-8"> 
-<title>菜鸟教程(runoob.com)</title> 
+
+<head>
+    <meta charset="utf-8">
+    <title>第一个 ECharts 实例</title>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #big-logo {
+            background-color: forestgreen;
+            height: 300px;
+            width: 500px;
+        }
+
+        input[type=text],
+        select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        div {
+            border-radius: 5px;
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+        div {
+            border-radius: 5px;
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+        #search-button {
+            border-radius: 5px;
+            background-color: #208f64;
+            padding: 0px;
+        }
+    </style>
 </head>
+
+
+<header>
+    <div id="header" style="background-color: #208f64; color:#ffffff;" align="right">
+        <a href="/charts" style="color: #ffffff;">Documents</a>
+        <!-- <div id="space" style="width: 10%;"></div> -->
+        &nbsp;&nbsp;
+        <a href="/charts" style="color: #ffffff;">API</a>
+        &nbsp;&nbsp;
+        <a href="/charts" style="color: #ffffff;">Contact Us</a>
+    </div>
+    <!-- header is here -->
+</header>
+
 <body>
+    <div id="main-window" align="center">
+        {% load static %}
+        <img src="{% static 'gh.png' %}" alt="big-logo" style="width: 20%;">
+        <div id="search-bar" style="height: 40px; width: 40%;" align="left">
+            <input type="text" id="input-frame" style="width: 80%;">
+            <button type="button" id="search-button" style="width: 15%; height: 40px; color: #ffffff;">Search</button>
+        </div>
 
-<div id="container" style="width:500px">
+    </div>
 
-<div id="header" style="background-color:#FFA500;">
-<h1 style="margin-bottom:0;">主要的网页标题</h1></div>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="char-frame" align="center">
+        <div id="char-show" style="width: 640px; height: 480px;"></div>
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('char-show'));
+            var webkitDep = {{ diaginfo | safe }}
+            
+            myChart.hideLoading();
 
-<div id="menu" style="background-color:#FFD700;height:200px;width:100px;float:left;">
-<b>菜单</b><br>
-HTML<br>
-CSS<br>
-JavaScript</div>
+            option = {
+                legend: {
+                    data: {{ data_legend | safe}} //此处的数据必须和关系网类别中name相对应  
+                },
+                series: [{
+                    type: 'graph',
+                    layout: 'force',
+                    animation: false,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'right'
+                        }
+                    },
+                    draggable: true,
+                    data: webkitDep.nodes.map(function (node, idx) {
+                        node.id = idx;
+                        return node;
+                    }),
+                    categories: webkitDep.categories,
+                    force: {
+                        edgeLength: 160, //连线的长度  
+                        repulsion: 200 //子节点之间的间距  
+                    },
+                    edges: webkitDep.links
+                }]
+            };
+            myChart.setOption(option);
+        </script>
+    </div>
 
-<div id="content" style="background-color:#EEEEEE;height:200px;width:400px;float:left;">
-内容在这里</div>
-
-<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
-版权 © runoob.com</div>
-
-</div>
- 
 </body>
+<footer>
+    <div id="footer" style="background-color:#ffffff;clear:both;text-align:center;">
+        copyright @ greenhat.ryan1202.wang</div>
+</footer>
+
+
 </html>

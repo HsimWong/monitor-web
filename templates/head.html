@@ -3,10 +3,8 @@
 
 <head> 
     <meta charset="utf-8">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.7.0/echarts.common.js"></script>
-    <title>Ryan Check | Please input your entiry</title>
-
+    <title>GreenHat | A world of connection</title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -17,7 +15,9 @@
             height: 300px;
             width: 500px;
         }
-        input[type=text], select {
+
+        input[type=text],
+        select {
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
@@ -39,7 +39,7 @@
         }
 
         input[type=submit]:hover {
-           background-color: #45a049;
+            background-color: #45a049;
         }
 
         div {
@@ -47,11 +47,13 @@
             background-color: #ffffff;
             padding: 20px;
         }
+
         div {
             border-radius: 5px;
             background-color: #ffffff;
             padding: 20px;
         }
+
         #search-button {
             border-radius: 5px;
             background-color: #208f64;
@@ -61,38 +63,42 @@
 </head>
 
 
-    <header>
-        <div id="header" style="background-color: #208f64; color:#ffffff;" align="right">
-            <a href="/charts" style="color: #ffffff;">Documents</a>
-            <!-- <div id="space" style="width: 10%;"></div> -->
-            &nbsp;&nbsp;
-            <a href="/charts" style="color: #ffffff;">API</a>
-            &nbsp;&nbsp;
-            <a href="/charts" style="color: #ffffff;">Contact Us</a>
-        </div>
-        <!-- header is here -->
-    </header>
+<header>
+    <div id="header" style="background-color: #208f64; color:#ffffff;" align="right">
+        <a href="/charts" style="color: #ffffff;">Documents</a>
+        <!-- <div id="space" style="width: 10%;"></div> -->
+        &nbsp;&nbsp;
+        <a href="/charts" style="color: #ffffff;">API</a>
+        &nbsp;&nbsp;
+        <a href="/charts" style="color: #ffffff;">Contact Us</a>
+    </div>
+    <!-- header is here -->
+</header>
 
-    <body class=" login" data-admin-utc-offset="0" 
-        data-gr-c-s-loaded="true"  align="center">
+<body class=" login" data-admin-utc-offset="8" data-gr-c-s-loaded="true" align="center">
+
+    <div id="main-window" align="center">
+        {% load static %}
+        <img src="{% static 'gh.png' %}" alt="big-logo" style="width: 30%;">
+        <div id="search-bar" style="height: 40px; width: 40%;" align="left">
+            <form action="result" method="GET">
+                <input type="text" id="input-frame" style="width: 80%;" name="inputstr" required="true">
+                <button type="submit" value="submit" id="search-button" style="width: 15%; height: 40px; color: #ffffff;">Search</button>
+            </form>
+            <!-- <input type="text" id="input-frame" style="width: 80%;">
+            <button type="button" id="search-button" style="width: 15%; height: 40px; color: #ffffff;">Search</button> -->
         
-        <div id="main-window" align="center">
-            {% load static %}
-            <img src="{% static 'gh.png' %}" alt="big-logo" style="width: 30%;">
-            <div id="search-bar" style="height: 40px; width: 40%;" align="left">
-                <input type="text" id="input-frame" style="width: 80%;">
-                <button type="button" id="search-button" style="width: 15%; height: 40px; color: #ffffff;">Search</button>
-            </div>
-            
         </div>
-            
-    
+
+    </div>
 
 
-    </body>
-    <footer>
-        <div id="footer" style="background-color:#ffffff;clear:both;text-align:center;">
-            copyright @ greenhat.ryan1202.wang</div>
-    </footer>
+
+
+</body>
+<footer>
+    <div id="footer" style="background-color:#ffffff;clear:both;text-align:center;">
+        copyright @ greenhat.ryan1202.wang</div>
+</footer>
 
 </html>
