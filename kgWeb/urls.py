@@ -21,6 +21,11 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     # path('charts', views.index),
     # path('result/?input-str=sadfasfd', views.result)
-    url(r'^result/?', views.result),
-    url(r'', views.index)
+    # url(r'^result/?', views.result),
+    # url(r'^/?', views.index),
+    # url(r'nodes', views.nodes),
+    # url(r'ajax_info', views.ajax_info),
+    path('', views.index),
+    path('ajax_info', views.ajax_info),
+    path("status_info", views.status_info),
 ]

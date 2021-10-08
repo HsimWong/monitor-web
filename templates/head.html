@@ -1,104 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
-<head> 
+<head>
+
+    <title>
+        {% block title %}
+        Cluster Status Checker
+        {% endblock %}
+    </title>
     <meta charset="utf-8">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.7.0/echarts.common.js"></script>
-    <title>GreenHat | A world of connection</title>
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-        #big-logo {
-            background-color: forestgreen;
-            height: 300px;
-            width: 500px;
-        }
 
-        input[type=text],
-        select {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
+    <!-- Add additional CSS in static file -->
 
-        input[type=submit] {
-            width: 100%;
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
 
-        input[type=submit]:hover {
-            background-color: #45a049;
-        }
-
-        div {
-            border-radius: 5px;
-            background-color: #ffffff;
-            padding: 20px;
-        }
-
-        div {
-            border-radius: 5px;
-            background-color: #ffffff;
-            padding: 20px;
-        }
-
-        #search-button {
-            border-radius: 5px;
-            background-color: #208f64;
-            padding: 0px;
-        }
-    </style>
 </head>
-
-
 <header>
     <div id="header" style="background-color: #208f64; color:#ffffff;" align="right">
-        <a href="/charts" style="color: #ffffff;">Documents</a>
-        <!-- <div id="space" style="width: 10%;"></div> -->
         &nbsp;&nbsp;
-        <a href="/charts" style="color: #ffffff;">API</a>
         &nbsp;&nbsp;
-        <a href="/charts" style="color: #ffffff;">Contact Us</a>
     </div>
-    <!-- header is here -->
 </header>
 
-<body class=" login" data-admin-utc-offset="8" data-gr-c-s-loaded="true" align="center">
+<body>
+    <script>
+        async function updateStatus() {
+            console.log("FUNCTION ENTERED\n");
+            var xmlhttp = new XMLHttpRequest();
+            while (true) {
+                xmlhttp.onreadystatechange = function() {
+                
+                    
+                
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        /* nodesStatus = {
+                            node1: "OK",
+                            node2: "FAILED"
+                        }
+                        */
+                    // if (true) {
+                        nodesStatus = JSON.parse(xmlhttp.responseText)
+                        document.getElementById("node1-status").innerHTML = (nodesStatus['node1']);
+                        document.getElementById("node2-status").innerHTML = nodesStatus['node2'];
 
-    <div id="main-window" align="center">
-        {% load static %}
-        <img src="{% static 'gh.png' %}" alt="big-logo" style="width: 30%;">
-        <div id="search-bar" style="height: 40px; width: 40%;" align="left">
-            <form action="result" method="GET">
-                <input type="text" id="input-frame" style="width: 80%;" name="inputstr" required="true">
-                <button type="submit" value="submit" id="search-button" style="width: 15%; height: 40px; color: #ffffff;">Search</button>
-            </form>
-            <!-- <input type="text" id="input-frame" style="width: 80%;">
-            <button type="button" id="search-button" style="width: 15%; height: 40px; color: #ffffff;">Search</button> -->
-        
+                        // document.getElementById("node1-status").innerText = "NODE1";
+                        // document.getElementById("node2-status").innerText = "Node2";
+                        // console.log("FUCK!");
+                    }
+                    // xmlhttp.open("GET", "status_info", true);
+                    // xmlhttp.send();
+                    // await new Promise(r => setTimeout(r, 1000));
+                }
+                xmlhttp.open("GET", "status_info", true);
+                xmlhttp.send();
+                await new Promise(r => setTimeout(r, 10000));
+            }
+            
+        }
+        // async function loadXMLDoc() {
+        //   var xmlhttp;
+        //   if (window.XMLHttpRequest) {
+        //     //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        //     xmlhttp=new XMLHttpRequest();
+        //   } else {
+        //     // IE6, IE5 浏览器执行代码
+        //     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        //   }
+        //   xmlhttp.onreadystatechange=function() {
+        //     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+        //       document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+        //     }
+        //   }
+        //   xmlhttp.open("GET","/ajax_info",true);
+        //   xmlhttp.send();
+        //     for (var i = 0; i < 5; i++) {
+        //         console.log("Hello, world");
+        //         document.getElementById("myDiv").innerHTML = i.toString();
+        //         await new Promise(r => setTimeout(r, 1000));
+        //     }
+        // }
+        // loadXMLDoc();
+
+        // function update_test() {
+
+        // }
+    </script>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                <ul class="sidebar-nav">
+                    <li><a href="/nodes">Nodes</a></li>
+                    <li><a href="/tasks">Tasks</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-10 ">
+                <div class="row">
+                    <!-- <span class="rounded" style="background-color: #73dab2; box-shadow: inset 1px -1px 1px #fff, inset -1px 1px 1px #fff;">dsfasf</span> -->
+                    <div class="col-sm-6" style="background-color: #73dab2; box-shadow: inset 1px -1px 1px #fff, inset -1px 1px 1px #fff; ">
+                        <div class="row">
+                            <div class="col-sm-12" style="background-color: #103b2b; color: rgb(170, 170, 117); box-shadow: inset 1px -1px 1px #fff, inset -1px 1px 1px #fff;">
+
+                                <h3>Ubuntu Machine 0</h3>
+                            </div>
+                            <div class="col-sm-5">操作系统：</div>
+                            <div class="col-sm-7">ubuntu</div>
+
+                            <div class="col-sm-5">节点地址：</div>
+                            <div class="col-sm-7", id="node1-ip">10.2.25.5</div>
+
+                            <div class="col-sm-5">节点状态：</div>
+                            <div class="col-sm-7", id="node1-status">Loading...</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" style="background-color: #73dab2; box-shadow: inset 1px -1px 1px #fff, inset -1px 1px 1px #fff;">
+                        <div class="row">
+                            <div class="col-sm-12" style="background-color: #103b2b; color: rgb(170, 170, 117); box-shadow: inset 1px -1px 1px #fff, inset -1px 1px 1px #fff;">
+
+                                <h3>Ubuntu Machine 1</h3>
+                            </div>
+                            <div class="col-sm-5">操作系统：</div>
+                            <div class="col-sm-7">ubuntu</div>
+
+                            <div class="col-sm-5">节点地址：</div>
+                            <div class="col-sm-7">10.2.25.41</div>
+
+                            <div class="col-sm-5">节点状态：</div>
+                            <div class="col-sm-7", id="node2-status">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
         </div>
+        <button type="button" class="btn btn-primary" onclick="updateStatus()">Start</button>
 
     </div>
-
-
-
-
 </body>
-<footer>
-    <div id="footer" style="background-color:#ffffff;clear:both;text-align:center;">
-        copyright @ greenhat.ryan1202.wang</div>
-</footer>
 
 </html>
